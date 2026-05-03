@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gobblers Caff – Cafe & Pizza | ECIL, Hyderabad</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --fire: #FF3B1F;
+    --ember: #FF7A00;
+    --gold: #FFB800;
+    --cream: #FFF8F0;
+    --dark: #1A0A00;
+    --charcoal: #2D1A0E;
+    --smoke: #5C3D2E;
+    --milk: #FFF1E6;
+    --card-bg: #ffffff;
+    --text: #1A0A00;
+    --muted: #7A5C4A;
+    --border: rgba(255,59,31,0.12);
+    --shadow: 0 8px 32px rgba(255,59,31,0.12);
+    --shadow-lg: 0 20px 60px rgba(255,59,31,0.18);
+    --r: 18px;
+    --r-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--fire); border-radius: 99px; }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px;
+    background: rgba(255,248,240,0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(255,59,31,0.1); }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--fire), var(--ember));
+    display: grid; place-items: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(255,59,31,0.35);
+  }
+  .nav-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 800;
+    color: var(--dark); line-height: 1.1;
+  }
+  .nav-name span { color: var(--fire); }
+  .nav-sub { font-size: 10px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 6px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--smoke);
+    font-size: 13.5px; font-weight: 500;
+    padding: 7px 13px; border-radius: 99px;
+    transition: all .2s;
+  }
+  .nav-links a:hover { background: var(--fire); color: #fff; }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--fire), var(--ember)) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(255,59,31,0.3);
+  }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 6px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2.5px;
+    background: var(--dark); border-radius: 99px;
+    transition: all .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 998;
+    background: rgba(255,248,240,0.97); backdrop-filter: blur(20px);
+    padding: 20px 24px 30px;
+    border-bottom: 1px solid var(--border);
+    flex-direction: column; gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none; color: var(--text); font-size: 16px; font-weight: 500;
+    padding: 12px 16px; border-radius: var(--r-sm);
+    transition: all .2s;
+  }
+  .mobile-menu a:hover { background: var(--fire); color: #fff; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100svh;
+    position: relative;
+    display: flex; align-items: center;
+    padding: 100px 24px 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(255,122,0,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(255,59,31,0.15) 0%, transparent 60%),
+      linear-gradient(160deg, #1A0A00 0%, #2D1A0E 50%, #3D1F0A 100%);
+  }
+
+  /* food emoji collage */
+  .hero-food-art {
+    position: absolute; right: -20px; top: 0; bottom: 0;
+    width: 55%; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .food-ring {
+    position: relative; width: 420px; height: 420px;
+  }
+  .food-ring .center-emoji {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 110px;
+    filter: drop-shadow(0 20px 40px rgba(255,122,0,0.5));
+    animation: floatMain 3s ease-in-out infinite;
+  }
+  .food-ring .orbit-emoji {
+    position: absolute; font-size: 42px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+  }
+  .orbit-emoji:nth-child(2) { top: 0; left: 50%; transform: translateX(-50%); animation: float1 2.8s ease-in-out infinite; }
+  .orbit-emoji:nth-child(3) { top: 20%; right: 0; animation: float2 3.2s ease-in-out infinite; }
+  .orbit-emoji:nth-child(4) { bottom: 10%; right: 5%; animation: float3 2.6s ease-in-out infinite; }
+  .orbit-emoji:nth-child(5) { bottom: 0; left: 50%; transform: translateX(-50%); animation: float1 3s ease-in-out infinite .5s; }
+  .orbit-emoji:nth-child(6) { bottom: 20%; left: 0; animation: float2 2.9s ease-in-out infinite .3s; }
+  .orbit-emoji:nth-child(7) { top: 20%; left: 5%; animation: float3 3.1s ease-in-out infinite .2s; }
+
+  @keyframes floatMain { 0%,100%{transform:translate(-50%,-50%) translateY(0)} 50%{transform:translate(-50%,-50%) translateY(-12px)} }
+  @keyframes float1 { 0%,100%{transform:translateY(0) translateX(-50%)} 50%{transform:translateY(-10px) translateX(-50%)} }
+  @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+  /* glow ring */
+  .food-ring::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,122,0,0.18) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{transform:translate(-50%,-50%) scale(1); opacity:.6} 50%{transform:translate(-50%,-50%) scale(1.15); opacity:1} }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 560px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,184,0,0.15);
+    border: 1px solid rgba(255,184,0,0.3);
+    border-radius: 99px; padding: 6px 16px;
+    font-size: 12px; font-weight: 600; letter-spacing: .08em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeUp .6s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 7vw, 62px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    animation: fadeUp .6s ease .1s both;
+  }
+  .hero-title .accent { color: var(--ember); }
+  .hero-title .fire { color: var(--gold); }
+
+  .hero-cats {
+    font-size: 14px; color: rgba(255,241,230,0.7);
+    letter-spacing: .05em;
+    margin-bottom: 20px;
+    animation: fadeUp .6s ease .2s both;
+  }
+
+  .hero-tagline {
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: rgba(255,241,230,0.9);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    animation: fadeUp .6s ease .3s both;
+  }
+
+  .hero-buttons {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 40px;
+    animation: fadeUp .6s ease .4s both;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 26px; border-radius: 99px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+  }
+  .btn:active { transform: scale(.96); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(37,211,102,0.45); }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(8px);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.18); transform: translateY(-3px); }
+
+  .btn-fire {
+    background: linear-gradient(135deg, var(--fire), var(--ember));
+    color: #fff;
+    box-shadow: var(--shadow);
+  }
+  .btn-fire:hover { transform: translateY(-3px) scale(1.02); box-shadow: var(--shadow-lg); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--fire);
+    border: 1.5px solid var(--fire);
+  }
+  .btn-outline:hover { background: var(--fire); color: #fff; transform: translateY(-2px); }
+
+  /* floating badges */
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    animation: fadeUp .6s ease .5s both;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 99px; padding: 8px 16px;
+    font-size: 12.5px; color: rgba(255,241,230,0.9);
+    backdrop-filter: blur(6px);
+    font-weight: 500;
+  }
+  .badge .dot { font-size: 14px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 80px 24px; }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--fire);
+    margin-bottom: 12px;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 22px; height: 2.5px;
+    background: var(--fire); border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800; line-height: 1.1;
+    color: var(--dark); margin-bottom: 16px;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--milk); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 50px; align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+  .about-card {
+    background: linear-gradient(135deg, #1A0A00, #2D1A0E);
+    border-radius: 24px; padding: 40px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 100px; min-height: 300px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 24px 60px rgba(26,10,0,0.25);
+  }
+  .about-card::before {
+    content: '';
+    position: absolute; top: -40%; right: -20%;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,122,0,0.25) 0%, transparent 70%);
+  }
+  .about-card .emoji-big { font-size: 90px; position: relative; z-index: 1; animation: floatMain 3s ease-in-out infinite; }
+
+  .stat-pills {
+    position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; white-space: nowrap;
+  }
+  .stat-pill {
+    background: #fff; border-radius: 99px; padding: 10px 18px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    font-size: 12px; font-weight: 600; color: var(--dark);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .stat-pill .icon { font-size: 15px; }
+
+  .about-text { padding-top: 10px; }
+  .about-text p { font-size: 15.5px; color: var(--smoke); line-height: 1.75; margin-bottom: 16px; }
+
+  .about-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px;
+  }
+  .feature-card {
+    background: #fff; border-radius: var(--r); padding: 16px;
+    border: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: all .25s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--fire), var(--ember));
+    display: grid; place-items: center; font-size: 18px;
+  }
+  .feature-text strong { display: block; font-size: 13.5px; color: var(--dark); margin-bottom: 2px; }
+  .feature-text span { font-size: 12px; color: var(--muted); }
+
+  /* ─── MENU ─── */
+  #menu { background: var(--cream); }
+
+  .menu-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .menu-tabs::-webkit-scrollbar { height: 0; }
+  .tab-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px; border-radius: 99px;
+    border: 1.5px solid var(--border);
+    background: #fff; color: var(--smoke);
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all .2s; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tab-btn:hover { border-color: var(--fire); color: var(--fire); }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--fire), var(--ember));
+    color: #fff; border-color: transparent;
+    box-shadow: 0 4px 16px rgba(255,59,31,0.3);
+  }
+
+  .menu-category { display: none; }
+  .menu-category.active { display: block; }
+
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .menu-card {
+    background: #fff; border-radius: var(--r);
+    padding: 20px; border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    cursor: default;
+  }
+  .menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255,59,31,0.25);
+  }
+
+  .menu-card-emoji {
+    font-size: 44px; margin-bottom: 14px;
+    transition: transform .3s;
+    display: block;
+  }
+  .menu-card:hover .menu-card-emoji { transform: scale(1.15) rotate(-5deg); }
+
+  .menu-card-name {
+    font-size: 15px; font-weight: 600; color: var(--dark);
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .menu-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; flex: 1; margin-bottom: 14px; }
+
+  .menu-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+
+  .price-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px; font-weight: 800; color: var(--fire);
+  }
+  .price-tag .currency { font-size: 13px; }
+
+  .price-sizes { display: flex; flex-direction: column; gap: 3px; }
+  .size-row { font-size: 12px; color: var(--smoke); }
+  .size-row strong { color: var(--fire); }
+
+  .add-btn {
+    width: 34px; height: 34px; border-radius: 99px;
+    background: linear-gradient(135deg, var(--fire), var(--ember));
+    border: none; cursor: pointer; color: #fff;
+    font-size: 18px; display: grid; place-items: center;
+    box-shadow: 0 4px 12px rgba(255,59,31,0.3);
+    transition: all .2s cubic-bezier(.34,1.56,.64,1);
+    flex-shrink: 0;
+  }
+  .add-btn:hover { transform: scale(1.2); }
+  .add-btn:active { transform: scale(.9); }
+
+  .veg-badge, .nonveg-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 600; letter-spacing: .04em;
+    padding: 3px 8px; border-radius: 4px; margin-bottom: 8px;
+  }
+  .veg-badge { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
+  .nonveg-badge { background: #FBE9E7; color: #BF360C; border: 1px solid #FFAB91; }
+  .veg-badge::before { content: '●'; color: #4CAF50; }
+  .nonveg-badge::before { content: '●'; color: #E53935; }
+
+  /* ─── LOCATION ─── */
+  #location { background: var(--milk); }
+
+  .location-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+  }
+
+  .map-placeholder {
+    background: linear-gradient(135deg, #1A0A00, #2D1A0E);
+    border-radius: 24px; overflow: hidden;
+    min-height: 340px; position: relative;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .map-pin-area {
+    position: relative; z-index: 2; text-align: center;
+  }
+  .map-pin {
+    font-size: 52px; display: block; margin-bottom: 12px;
+    filter: drop-shadow(0 8px 20px rgba(255,59,31,0.5));
+    animation: pinBounce 2s ease-in-out infinite;
+  }
+  @keyframes pinBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .map-label {
+    background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: var(--r);
+    padding: 12px 20px; color: #fff;
+    font-size: 13px; font-weight: 500;
+  }
+  .map-label strong { display: block; font-size: 15px; margin-bottom: 2px; }
+
+  .map-road {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+    background: rgba(255,184,0,0.08); border-top: 2px dashed rgba(255,184,0,0.2);
+  }
+  .map-road-label {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: rgba(255,184,0,0.6); letter-spacing: .06em; text-transform: uppercase; font-weight: 600; white-space: nowrap;
+  }
+
+  .location-info { }
+  .location-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px; border-radius: var(--r);
+    background: #fff; border: 1px solid var(--border);
+    margin-bottom: 14px;
+    transition: all .25s;
+  }
+  .location-item:hover { transform: translateX(5px); box-shadow: var(--shadow); }
+  .loc-icon {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
+    background: linear-gradient(135deg, var(--fire), var(--ember));
+    display: grid; place-items: center; font-size: 20px;
+    box-shadow: 0 4px 12px rgba(255,59,31,0.3);
+  }
+  .loc-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+  .loc-text span { font-size: 13.5px; color: var(--smoke); line-height: 1.5; }
+
+  .hours-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; font-size: 13px; }
+  .hours-day { color: var(--muted); font-weight: 500; }
+  .hours-time { color: var(--dark); font-weight: 600; }
+  .open-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #E8F5E9; color: #2E7D32; border-radius: 99px;
+    padding: 5px 12px; font-size: 11.5px; font-weight: 700; margin-top: 8px;
+  }
+  .open-badge::before { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; background: #4CAF50; animation: blink 1.4s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ─── CONTACT ─── */
+  #contact { background: linear-gradient(135deg, #1A0A00, #2D1A0E); }
+
+  .contact-inner { text-align: center; max-width: 560px; margin: 0 auto; }
+  .contact-inner .section-label { justify-content: center; }
+  .contact-inner .section-label::before { display: none; }
+  .contact-inner .section-title { color: #fff; }
+  .contact-inner p { color: rgba(255,241,230,0.7); font-size: 15px; line-height: 1.7; margin-bottom: 36px; }
+
+  .contact-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px; padding: 32px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 24px;
+  }
+  .phone-display {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px; font-weight: 800; color: #fff;
+    letter-spacing: .03em; margin-bottom: 8px;
+  }
+  .phone-label { font-size: 13px; color: rgba(255,241,230,0.5); margin-bottom: 20px; }
+
+  .contact-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 32px; border-radius: 99px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff; text-decoration: none; font-size: 15px; font-weight: 700;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+    transition: all .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .whatsapp-btn:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 16px 40px rgba(37,211,102,0.4); }
+
+  .call-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; border-radius: 99px;
+    background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2);
+    color: #fff; text-decoration: none; font-size: 15px; font-weight: 600;
+    backdrop-filter: blur(8px);
+    transition: all .25s;
+  }
+  .call-btn:hover { background: rgba(255,255,255,0.18); transform: translateY(-3px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0D0500; padding: 40px 24px 28px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+    color: #fff; margin-bottom: 6px;
+  }
+  .footer-logo span { color: var(--fire); }
+  .footer-sub { font-size: 12.5px; color: rgba(255,241,230,0.4); margin-bottom: 24px; }
+
+  .social-links { display: flex; gap: 12px; justify-content: center; margin-bottom: 28px; }
+  .social-link {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 18px; text-decoration: none;
+    transition: all .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .social-link.ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+  .social-link.fb { background: #1877F2; color: #fff; }
+  .social-link:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 10px 24px rgba(0,0,0,0.3); }
+
+  .footer-divider { width: 60px; height: 2px; background: rgba(255,255,255,0.06); margin: 0 auto 20px; border-radius: 2px; }
+  .footer-copy { font-size: 12px; color: rgba(255,241,230,0.25); }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #1A0A00; color: #fff; padding: 12px 24px; border-radius: 99px;
+    font-size: 13.5px; font-weight: 500; z-index: 9999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-food-art { display: none; }
+    .hero-content { max-width: 100%; }
+    .about-grid, .location-grid { grid-template-columns: 1fr; }
+    .stat-pills { position: static; transform: none; justify-content: center; margin-top: 24px; }
+    .about-card { min-height: 200px; }
+    .about-features { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .menu-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .menu-card { padding: 14px; }
+    .menu-card-emoji { font-size: 34px; }
+    .about-features { grid-template-columns: 1fr; }
+    .hero { padding: 90px 20px 50px; }
+    section { padding: 60px 20px; }
+  }
+  @media (max-width: 380px) {
+    .menu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">🍕</div>
+    <div>
+      <div class="nav-name">Gobblers <span>Caff</span></div>
+      <div class="nav-sub">Cafe & Pizza · ECIL</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://wa.me/916304244804?text=Hi!%20I'd%20like%20to%20place%20an%20order" target="_blank" class="nav-cta">Order Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#menu" onclick="closeMenu()">Menu</a>
+  <a href="#location" onclick="closeMenu()">Location</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="https://wa.me/916304244804?text=Hi!%20I'd%20like%20to%20place%20an%20order" target="_blank" class="btn btn-fire" style="margin-top:8px;border-radius:99px;justify-content:center;">🛒 Order on WhatsApp</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+
+  <div class="hero-food-art">
+    <div class="food-ring">
+      <span class="center-emoji">🍕</span>
+      <span class="orbit-emoji">🍔</span>
+      <span class="orbit-emoji">🍟</span>
+      <span class="orbit-emoji">🌯</span>
+      <span class="orbit-emoji">🍝</span>
+      <span class="orbit-emoji">🥤</span>
+      <span class="orbit-emoji">🍰</span>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">📍 ECIL, Hyderabad · Now Open</div>
+
+    <h1 class="hero-title">
+      Gobblers<br><span class="accent">Caff</span> <span class="fire">🔥</span>
+    </h1>
+
+    <p class="hero-cats">Burgers &bull; Pizza &bull; Wraps &bull; Pasta &bull; Snacks &bull; Shakes</p>
+
+    <p class="hero-tagline">
+      Delicious food. Fast service. Budget-friendly taste in ECIL.<br>
+      Your go-to café for quick bites, family meals & hangouts.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="https://wa.me/916304244804?text=Hi!%20I'd%20like%20to%20order%20from%20Gobblers%20Caff" target="_blank" class="btn btn-primary">
+        <i class="fab fa-whatsapp" style="font-size:18px"></i> Order on WhatsApp
+      </a>
+      <a href="#menu" class="btn btn-secondary">
+        📋 View Menu
+      </a>
+    </div>
+
+    <div class="hero-badges">
+      <div class="badge"><span class="dot">⭐</span> 4.2 Rated Local Favourite</div>
+      <div class="badge"><span class="dot">🚀</span> Fast Service</div>
+      <div class="badge"><span class="dot">💰</span> Budget Friendly</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <div class="about-card">
+          <span class="emoji-big">🍔</span>
+        </div>
+        <div class="stat-pills">
+          <div class="stat-pill"><span class="icon">⭐</span> 4.2 Rating</div>
+          <div class="stat-pill"><span class="icon">🏪</span> ECIL, Hyd</div>
+          <div class="stat-pill"><span class="icon">⚡</span> Fast & Fresh</div>
+        </div>
+      </div>
+
+      <div class="about-text reveal-right" style="transition-delay:.1s">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title">Where Every Bite Tells a Story 🍕</h2>
+        <p>
+          Gobblers Caff is ECIL's favourite fast-food destination. We serve mouth-watering burgers, 
+          crispy pizzas, hearty wraps, saucy pastas, and refreshing shakes — all made fresh to order 
+          at prices that won't burn your pocket.
+        </p>
+        <p>
+          Whether you're grabbing a quick lunch, chilling with friends, or treating the family — 
+          Gobblers is the place to be. Located near Ayyappa Temple Road, South Kamala Nagar, ECIL.
+        </p>
+
+        <div class="about-features">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-text">
+              <strong>Super Fast Service</strong>
+              <span>Order to table in minutes</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <div class="feature-text">
+              <strong>Budget Friendly</strong>
+              <span>Great taste, fair price</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔥</div>
+            <div class="feature-text">
+              <strong>Made Fresh</strong>
+              <span>Every order, every time</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌿</div>
+            <div class="feature-text">
+              <strong>Veg & Non-Veg</strong>
+              <span>Options for everyone</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENU ─── -->
+<section id="menu">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom: 48px;">
+      <div class="section-label" style="justify-content:center">
+        <div style="width:22px;height:2.5px;background:var(--fire);border-radius:2px"></div>
+        Our Menu
+      </div>
+      <h2 class="section-title">Explore What We Serve 🍽️</h2>
+      <p style="color:var(--muted);font-size:15px;max-width:480px;margin:0 auto">Fresh, flavourful and made with love — pick your favourite and order right away.</p>
+    </div>
+
+    <div class="menu-tabs reveal">
+      <button class="tab-btn active" onclick="switchTab(this,'burgers')">🍔 Burgers</button>
+      <button class="tab-btn" onclick="switchTab(this,'pizza')">🍕 Pizza</button>
+      <button class="tab-btn" onclick="switchTab(this,'pasta')">🍝 Pasta</button>
+      <button class="tab-btn" onclick="switchTab(this,'wraps')">🌯 Wraps</button>
+      <button class="tab-btn" onclick="switchTab(this,'fries')">🍟 Fries & Sides</button>
+      <button class="tab-btn" onclick="switchTab(this,'rice')">🍚 Rice Bowls</button>
+      <button class="tab-btn" onclick="switchTab(this,'sandwiches')">🥪 Sandwiches</button>
+      <button class="tab-btn" onclick="switchTab(this,'desserts')">🍰 Desserts & Drinks</button>
+    </div>
+
+    <!-- BURGERS -->
+    <div class="menu-category active" id="burgers">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🍔</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Tandoori Paneer Burger</div>
+          <div class="menu-card-desc">Juicy tandoori paneer patty with fresh veggies & spicy mint chutney in a toasted bun.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>139</div>
+            <button class="add-btn" onclick="addToCart('Tandoori Paneer Burger', 139)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🍔</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Classic Veg Burger</div>
+          <div class="menu-card-desc">A classic crispy veg patty with crunchy lettuce, tomato, and creamy mayo.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>99</div>
+            <button class="add-btn" onclick="addToCart('Classic Veg Burger', 99)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <span class="menu-card-emoji">🍗</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Crispy Chicken Burger</div>
+          <div class="menu-card-desc">Golden crispy chicken fillet with sriracha mayo, pickles, and fresh lettuce.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>159</div>
+            <button class="add-btn" onclick="addToCart('Crispy Chicken Burger', 159)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.15s">
+          <span class="menu-card-emoji">🔥</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">BBQ Chicken Burger</div>
+          <div class="menu-card-desc">Smoky BBQ glazed chicken with caramelised onions and cheddar in a brioche bun.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>149</div>
+            <button class="add-btn" onclick="addToCart('BBQ Chicken Burger', 149)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.2s">
+          <span class="menu-card-emoji">🌶️</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Spicy Grill Chicken Burger</div>
+          <div class="menu-card-desc">Fire-grilled spicy chicken with jalapeños, hot sauce, and cool coleslaw.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>149</div>
+            <button class="add-btn" onclick="addToCart('Spicy Grill Chicken Burger', 149)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PIZZA -->
+    <div class="menu-category" id="pizza">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🍕</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Veg Extravaganza Pizza</div>
+          <div class="menu-card-desc">Loaded with capsicum, corn, olives, onions, tomatoes & extra cheese.</div>
+          <div class="menu-card-footer">
+            <div class="price-sizes">
+              <div class="size-row">8" — <strong>₹199</strong></div>
+              <div class="size-row">10" — <strong>₹279</strong></div>
+            </div>
+            <button class="add-btn" onclick="addToCart('Veg Extravaganza Pizza', 199)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🧀</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Paneer Paradise Pizza</div>
+          <div class="menu-card-desc">Tandoori paneer chunks, bell peppers, and a rich tomato herb base.</div>
+          <div class="menu-card-footer">
+            <div class="price-sizes">
+              <div class="size-row">8" — <strong>₹219</strong></div>
+              <div class="size-row">10" — <strong>₹299</strong></div>
+            </div>
+            <button class="add-btn" onclick="addToCart('Paneer Paradise Pizza', 219)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <span class="menu-card-emoji">🍖</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Chicken Pepperoni Pizza</div>
+          <div class="menu-card-desc">Classic pepperoni with mozzarella, tomato sauce & a hint of oregano.</div>
+          <div class="menu-card-footer">
+            <div class="price-sizes">
+              <div class="size-row">8" — <strong>₹239</strong></div>
+              <div class="size-row">10" — <strong>₹329</strong></div>
+            </div>
+            <button class="add-btn" onclick="addToCart('Chicken Pepperoni Pizza', 239)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.15s">
+          <span class="menu-card-emoji">🌶️</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Chicken Tikka Pizza</div>
+          <div class="menu-card-desc">Spicy tikka marinated chicken, onions, capsicum on a smoky tomato base.</div>
+          <div class="menu-card-footer">
+            <div class="price-sizes">
+              <div class="size-row">8" — <strong>₹249</strong></div>
+              <div class="size-row">10" — <strong>₹339</strong></div>
+            </div>
+            <button class="add-btn" onclick="addToCart('Chicken Tikka Pizza', 249)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASTA -->
+    <div class="menu-category" id="pasta">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🍝</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Veg Alfredo Pasta</div>
+          <div class="menu-card-desc">Creamy white sauce pasta with sautéed veggies, herbs & parmesan.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>169</div>
+            <button class="add-btn" onclick="addToCart('Veg Alfredo Pasta', 169)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🍝</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Chicken Alfredo Pasta</div>
+          <div class="menu-card-desc">Tender grilled chicken in rich creamy alfredo sauce with penne.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>189</div>
+            <button class="add-btn" onclick="addToCart('Chicken Alfredo Pasta', 189)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WRAPS -->
+    <div class="menu-category" id="wraps">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🌯</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Paneer Wrap</div>
+          <div class="menu-card-desc">Grilled paneer tikka with crunchy veggies, mint chutney in a soft tortilla.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>139</div>
+            <button class="add-btn" onclick="addToCart('Paneer Wrap', 139)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🌯</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Chicken Wrap</div>
+          <div class="menu-card-desc">Juicy grilled chicken strips with fresh veggies, mayo & smoky sauce.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>149</div>
+            <button class="add-btn" onclick="addToCart('Chicken Wrap', 149)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRIES -->
+    <div class="menu-category" id="fries">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🧀</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Loaded Cheese Fries</div>
+          <div class="menu-card-desc">Crispy fries smothered in melted cheddar and jalapeños.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>129</div>
+            <button class="add-btn" onclick="addToCart('Loaded Cheese Fries', 129)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🍗</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Chicken Popcorn</div>
+          <div class="menu-card-desc">Bite-sized crispy chicken pops with your choice of dipping sauce.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>139</div>
+            <button class="add-btn" onclick="addToCart('Chicken Popcorn', 139)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <span class="menu-card-emoji">🔥</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Crispy Wings</div>
+          <div class="menu-card-desc">Golden fried wings tossed in buffalo or bbq sauce. Finger-lickin' good!</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>179</div>
+            <button class="add-btn" onclick="addToCart('Crispy Wings', 179)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.15s">
+          <span class="menu-card-emoji">🍟</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Garlic Fries</div>
+          <div class="menu-card-desc">Classic fries tossed with roasted garlic, herbs, and a parmesan finish.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>119</div>
+            <button class="add-btn" onclick="addToCart('Garlic Fries', 119)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RICE BOWLS -->
+    <div class="menu-category" id="rice">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🍚</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Veg Rice Bowl</div>
+          <div class="menu-card-desc">Steamed rice topped with sautéed veggies, sauces & fresh herbs.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>149</div>
+            <button class="add-btn" onclick="addToCart('Veg Rice Bowl', 149)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🌶️</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Peri Peri Chicken Bowl</div>
+          <div class="menu-card-desc">Fiery peri peri grilled chicken on fluffy rice with coleslaw & sauce.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>179</div>
+            <button class="add-btn" onclick="addToCart('Peri Peri Chicken Bowl', 179)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SANDWICHES -->
+    <div class="menu-category" id="sandwiches">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🥪</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Veg Sandwich</div>
+          <div class="menu-card-desc">Fresh veggies, cheese, and tangy sauces between toasted bread slices.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>99</div>
+            <button class="add-btn" onclick="addToCart('Veg Sandwich', 99)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🍗</span>
+          <div class="nonveg-badge">Non-Veg</div>
+          <div class="menu-card-name">Chicken Club Sandwich</div>
+          <div class="menu-card-desc">Grilled chicken, crispy bacon strips, cheese, lettuce & tomato in a club stack.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>149</div>
+            <button class="add-btn" onclick="addToCart('Chicken Club Sandwich', 149)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESSERTS -->
+    <div class="menu-category" id="desserts">
+      <div class="menu-grid">
+        <div class="menu-card reveal">
+          <span class="menu-card-emoji">🥤</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Milkshakes</div>
+          <div class="menu-card-desc">Thick, creamy shakes in Choco, Strawberry, Vanilla, Mango & more.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>99</div>
+            <button class="add-btn" onclick="addToCart('Milkshake', 99)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.05s">
+          <span class="menu-card-emoji">🍮</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Pudding</div>
+          <div class="menu-card-desc">Silky smooth caramel or chocolate pudding — a sweet ending.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>79</div>
+            <button class="add-btn" onclick="addToCart('Pudding', 79)">+</button>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <span class="menu-card-emoji">🍰</span>
+          <div class="veg-badge">Veg</div>
+          <div class="menu-card-name">Cheesecake Cups</div>
+          <div class="menu-card-desc">Individual no-bake cheesecake cups in strawberry, blueberry & oreo.</div>
+          <div class="menu-card-footer">
+            <div class="price-tag"><span class="currency">₹</span>89</div>
+            <button class="add-btn" onclick="addToCart('Cheesecake Cup', 89)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WhatsApp CTA under menu -->
+    <div style="text-align:center; margin-top:48px;" class="reveal">
+      <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Can't find what you want? Message us directly!</p>
+      <a href="https://wa.me/916304244804?text=Hi!%20I'd%20like%20to%20order%20from%20Gobblers%20Caff" target="_blank" class="btn btn-fire" style="font-size:15px;padding:16px 32px">
+        <i class="fab fa-whatsapp" style="font-size:18px"></i> Order via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOCATION ─── -->
+<section id="location">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:48px;" class="reveal">
+      <div class="section-label" style="justify-content:center">
+        <div style="width:22px;height:2.5px;background:var(--fire);border-radius:2px"></div>
+        Find Us
+      </div>
+      <h2 class="section-title">Visit Gobblers Caff 📍</h2>
+    </div>
+
+    <div class="location-grid">
+      <!-- Map Placeholder -->
+      <div class="map-placeholder reveal-left">
+        <div class="map-grid"></div>
+        <div class="map-road">
+          <div class="map-road-label">Ayyappa Temple Road</div>
+        </div>
+        <div class="map-pin-area">
+          <span class="map-pin">📍</span>
+          <div class="map-label">
+            <strong>Gobblers Caff</strong>
+            South Kamala Nagar, ECIL
+          </div>
+        </div>
+      </div>
+
+      <!-- Location Info -->
+      <div class="reveal-right" style="transition-delay:.1s">
+        <div class="location-item">
+          <div class="loc-icon">📍</div>
+          <div class="loc-text">
+            <strong>Address</strong>
+            <span>Near Ayyappa Temple Road,<br>South Kamala Nagar, ECIL,<br>Hyderabad, Telangana</span>
+          </div>
+        </div>
+        <div class="location-item">
+          <div class="loc-icon">📞</div>
+          <div class="loc-text">
+            <strong>Phone</strong>
+            <span>06304244804</span>
+          </div>
+        </div>
+        <div class="location-item">
+          <div class="loc-icon">🕐</div>
+          <div class="loc-text">
+            <strong>Opening Hours</strong>
+            <div class="hours-grid" style="margin-top:8px">
+              <span class="hours-day">Mon – Fri</span><span class="hours-time">11:00 AM – 10:30 PM</span>
+              <span class="hours-day">Saturday</span><span class="hours-time">11:00 AM – 11:00 PM</span>
+              <span class="hours-day">Sunday</span><span class="hours-time">11:00 AM – 11:00 PM</span>
+            </div>
+            <div class="open-badge">Open Now</div>
+          </div>
+        </div>
+
+        <a href="https://maps.google.com/?q=ECIL+Hyderabad" target="_blank" class="btn btn-fire" style="width:100%;justify-content:center;margin-top:16px">
+          🗺️ Get Directions on Maps
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-label reveal">📞 Contact Us</div>
+      <h2 class="section-title reveal" style="color:#fff">Ready to Order? Let's Go! 🚀</h2>
+      <p class="reveal">
+        Skip the wait — order directly on WhatsApp for the fastest service. 
+        We'll have your food ready before you know it!
+      </p>
+
+      <div class="contact-card reveal">
+        <div class="phone-display">06304244804</div>
+        <div class="phone-label">Call or WhatsApp us anytime</div>
+        <div class="contact-buttons">
+          <a href="https://wa.me/916304244804?text=Hi!%20I'd%20like%20to%20place%20an%20order%20at%20Gobblers%20Caff" target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp" style="font-size:22px"></i> Order Now on WhatsApp
+          </a>
+          <a href="tel:06304244804" class="call-btn">
+            <i class="fas fa-phone"></i> Call Us
+          </a>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;" class="reveal">
+        <div class="badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,241,230,0.8)">
+          <span>⚡</span> Instant Response
+        </div>
+        <div class="badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,241,230,0.8)">
+          <span>🛵</span> Dine-In & Takeaway
+        </div>
+        <div class="badge" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,241,230,0.8)">
+          <span>💳</span> Cash & UPI Accepted
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">Gobblers <span>Caff</span></div>
+  <div class="footer-sub">Cafe & Pizza · ECIL, Hyderabad</div>
+
+  <div class="social-links">
+    <a href="#" class="social-link ig" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="social-link fb" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+  </div>
+
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2025 Gobblers Caff. All rights reserved. · Near Ayyappa Temple Road, South Kamala Nagar, ECIL, Hyderabad</div>
+</footer>
+
+<!-- ─── TOAST ─── -->
+<div class="toast" id="toast">🛒 Added to order!</div>
+
+<script>
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Hamburger
+  function toggleMenu() {
+    const h = document.getElementById('hamburger');
+    const m = document.getElementById('mobileMenu');
+    h.classList.toggle('open');
+    m.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Tab switching
+  function switchTab(btn, cat) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(cat).classList.add('active');
+    // re-trigger reveals inside
+    document.querySelectorAll('#' + cat + ' .reveal').forEach((el, i) => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), i * 60);
+    });
+  }
+
+  // Toast
+  let toastTimer;
+  function addToCart(name, price) {
+    const toast = document.getElementById('toast');
+    toast.textContent = '🛒 ' + name + ' — ₹' + price + ' added!';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Initial menu reveals
+  document.querySelectorAll('#burgers .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 300 + i * 60);
+  });
+</script>
+</body>
+</html>
